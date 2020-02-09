@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import * as converter from "./lib/converter";
 import Input from "./components/UI/Input/Input";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
     touched: false
   });
   const [isNumeralsCorrect, setNumeralsCorrect] = useState(false);
+  const [result, setResult] = useState("");
 
   useEffect(() => {
     if (left.valid && right.valid) {
@@ -34,6 +36,13 @@ function App() {
     return input.test(value);
   };
 
+  const CalculateHandler = () => {
+    const leftValue = converter.fromRomanNumerals(left.value);
+    const rightValue = converter.fromRomanNumerals(right.value);
+    const result = converter.toRomanNumerals(leftValue + rightValue);
+    setResult(result);
+  };
+
   return (
     <div className="App">
       <h1>Roman Numerals Calculator</h1>
@@ -53,9 +62,11 @@ function App() {
           touched={right.touched}
           changed={event => inputChangedHandler(event, "right")}
         />
-        <button disabled={!isNumeralsCorrect}>Calculate</button>
+        <button disabled={!isNumeralsCorrect} onClick={CalculateHandler}>
+          Calculate
+        </button>
       </div>
-      <p>Result:</p>
+      <p>Result: {result}</p>
     </div>
   );
 }
