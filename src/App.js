@@ -15,7 +15,8 @@ function App() {
 
   useEffect(() => {
     if (left.valid && right.valid) {
-      setNumeralsCorrect(true);
+      // For simulation of asynchronous validation
+      setTimeout(() => setNumeralsCorrect(true), 1000);
     } else {
       setNumeralsCorrect(false);
     }
@@ -36,7 +37,7 @@ function App() {
     return input.test(value);
   };
 
-  const CalculateHandler = () => {
+  const calculateHandler = () => {
     const leftValue = converter.fromRomanNumerals(left.value);
     const rightValue = converter.fromRomanNumerals(right.value);
     const result = converter.toRomanNumerals(leftValue + rightValue);
@@ -62,7 +63,7 @@ function App() {
           touched={right.touched}
           changed={event => inputChangedHandler(event, "right")}
         />
-        <button disabled={!isNumeralsCorrect} onClick={CalculateHandler}>
+        <button disabled={!isNumeralsCorrect} onClick={calculateHandler}>
           Calculate
         </button>
       </div>

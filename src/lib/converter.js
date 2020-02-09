@@ -16,12 +16,11 @@ export const fromRomanNumerals = input => {
     right = left;
   }
 
-  return result;
+  return result > 4999 ? "Too big number" : result;
 };
 
 export const toRomanNumerals = input => {
   const text = input.toString();
-  console.log(text);
 
   if (text.length === 1) return handleSingleNumber(input);
   else if (text.length === 2) return handleDualNumber(text);
@@ -31,11 +30,37 @@ export const toRomanNumerals = input => {
   return "Too big number";
 };
 
+const handleSingleNumber = number => {
+  switch (number) {
+    case 1:
+      return "I";
+    case 2:
+      return "II";
+    case 3:
+      return "III";
+    case 4:
+      return "IV";
+    case 5:
+      return "V";
+    case 6:
+      return "VI";
+    case 7:
+      return "VII";
+    case 8:
+      return "VIII";
+    case 9:
+      return "IX";
+    default:
+      return "";
+  }
+};
+
 const handleDualNumber = input => {
   const value1Num = parseInt(input[0]);
 
   let value1 = "";
-  if (value1Num >= 5) value1 = "L" + getWholeNumber("X", value1Num - 5);
+  if (value1Num == 9) value1 = "XC";
+  else if (value1Num >= 5) value1 = "L" + getWholeNumber("X", value1Num - 5);
   else value1 = getWholeNumber("X", value1Num);
 
   const value2 = handleSingleNumber(parseInt(input[1]));
@@ -48,7 +73,8 @@ const handleTripleNumber = input => {
   const value1Num = parseInt(input[0]);
 
   let value1 = "";
-  if (value1Num >= 5) value1 = "D" + getWholeNumber("C", value1Num - 5);
+  if (value1Num == 9) value1 = "CM";
+  else if (value1Num >= 5) value1 = "D" + getWholeNumber("C", value1Num - 5);
   else value1 = getWholeNumber("C", value1Num);
 
   const value2 = handleDualNumber(input.substr(1, 2));
@@ -75,31 +101,6 @@ const getWholeNumber = (from, to) => {
     result += from;
   }
   return result;
-};
-
-const handleSingleNumber = number => {
-  switch (number) {
-    case 1:
-      return "I";
-    case 2:
-      return "II";
-    case 3:
-      return "III";
-    case 4:
-      return "IV";
-    case 5:
-      return "V";
-    case 6:
-      return "VI";
-    case 7:
-      return "VII";
-    case 8:
-      return "VIII";
-    case 9:
-      return "X";
-    default:
-      return "";
-  }
 };
 
 const getNumberFromRoman = value => {
