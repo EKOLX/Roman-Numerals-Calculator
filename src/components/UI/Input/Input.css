@@ -10,9 +10,9 @@
 }
 
 .Valid {
-  border: 1px solid lime;
+  border: 1px solid limegreen;
 }
 
 .Invalid {
-  border: 1px solid crimson;
+  border: 1px solid lightcoral;
 }

@@ -1,4 +1,12 @@
 .Button {
   padding: 10px 15px;
   margin: 10px;
+  background: lightgray;
+  cursor: not-allowed;
+}
+
+.Button:enabled {
+  background: darkcyan;
+  color: white;
+  cursor: pointer;
 }
