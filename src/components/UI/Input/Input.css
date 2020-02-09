@@ -4,3 +4,15 @@
   margin: 10px;
   padding: 10px;
 }
+
+.Input:focus {
+  outline: none;
+}
+
+.Valid {
+  border: 1px solid lime;
+}
+
+.Invalid {
+  border: 1px solid crimson;
+}
