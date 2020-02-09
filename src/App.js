@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import * as converter from "./lib/converter";
 import Input from "./components/UI/Input/Input";
+import Button from "./components/UI/Button/Button";
+import Operations from "./components/Operations";
 
 function App() {
   const [left, setLeft] = useState({ value: "", valid: false, touched: false });
@@ -10,17 +12,18 @@ function App() {
     valid: false,
     touched: false
   });
-  const [isNumeralsCorrect, setNumeralsCorrect] = useState(false);
+  const [operation, setOperation] = useState("");
+  const [validForm, setFormValidity] = useState(false);
   const [result, setResult] = useState("");
 
   useEffect(() => {
-    if (left.valid && right.valid) {
+    if (left.valid && right.valid && operation !== "") {
       // For simulation of asynchronous validation
-      setTimeout(() => setNumeralsCorrect(true), 1000);
+      setTimeout(() => setFormValidity(true), 1000);
     } else {
-      setNumeralsCorrect(false);
+      setFormValidity(false);
     }
-  }, [left, right]);
+  }, [left, right, operation]);
 
   const inputChangedHandler = (event, type) => {
     const value = event.target.value;
@@ -40,8 +43,32 @@ function App() {
   const calculateHandler = () => {
     const leftValue = converter.fromRomanNumerals(left.value);
     const rightValue = converter.fromRomanNumerals(right.value);
-    const result = converter.toRomanNumerals(leftValue + rightValue);
+
+    let result = "";
+
+    switch (operation) {
+      case "+":
+        result = converter.toRomanNumerals(leftValue + rightValue);
+        break;
+      case "-":
+        if (leftValue - rightValue > 0)
+          result = converter.toRomanNumerals(leftValue - rightValue);
+        else result = "Is negative";
+        break;
+      case "x":
+        if (leftValue * rightValue < 5000)
+          result = converter.toRomanNumerals(leftValue * rightValue);
+        else result = "Too big number";
+        break;
+      default:
+        result = "";
+    }
+
     setResult(result);
+  };
+
+  const operationsPressHandler = value => {
+    setOperation(value);
   };
 
   return (
@@ -55,7 +82,7 @@ function App() {
           touched={left.touched}
           changed={event => inputChangedHandler(event, "left")}
         />
-        <section>+</section>
+        <Operations pressed={operationsPressHandler}></Operations>
         <Input
           placeholder="IX"
           value={right.value}
@@ -63,11 +90,11 @@ function App() {
           touched={right.touched}
           changed={event => inputChangedHandler(event, "right")}
         />
-        <button disabled={!isNumeralsCorrect} onClick={calculateHandler}>
+        <Button clickable={validForm} clicked={calculateHandler}>
           Calculate
-        </button>
+        </Button>
       </div>
-      <p>Result: {result}</p>
+      <h3>Result: {result}</h3>
     </div>
   );
 }

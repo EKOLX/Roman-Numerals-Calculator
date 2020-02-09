@@ -59,7 +59,7 @@ const handleDualNumber = input => {
   const value1Num = parseInt(input[0]);
 
   let value1 = "";
-  if (value1Num == 9) value1 = "XC";
+  if (value1Num === 9) value1 = "XC";
   else if (value1Num >= 5) value1 = "L" + getWholeNumber("X", value1Num - 5);
   else value1 = getWholeNumber("X", value1Num);
 
@@ -73,7 +73,7 @@ const handleTripleNumber = input => {
   const value1Num = parseInt(input[0]);
 
   let value1 = "";
-  if (value1Num == 9) value1 = "CM";
+  if (value1Num === 9) value1 = "CM";
   else if (value1Num >= 5) value1 = "D" + getWholeNumber("C", value1Num - 5);
   else value1 = getWholeNumber("C", value1Num);
 
